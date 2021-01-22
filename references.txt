@@ -1,0 +1,28 @@
+https://hackersandslackers.com/plotly-dash-with-flask/
+
+https://hackersandslackers.com/flask-application-factory/
+
+
+https://hackersandslackers.com/managing-user-session-variables-with-flask-sessions-and-redis/
+
+
+https://codeburst.io/jinja-2-explained-in-5-minutes-88548486834e
+
+https://codeburst.io/web-development-back-end-with-flask-part-2-routing-a8ecfd828933
+
+
+see again this https://hackersandslackers.com/flask-application-factory/
+
+https://stackoverflow.com/questions/27539309/how-do-i-create-a-link-to-another-html-page/27540234
+
+https://pythonbasics.org/flask-http-methods/
+
+pip install dash==1.18.1
+Successfully installed dash-1.18.1 dash-core-components-1.14.1 dash-table-4.11.1
+
+
+Seeing this video I could connect DASH with CSS
+https://www.youtube.com/watch?v=x9mUZZ19dl0
+
+
+How to embed Bootstrap CSS & JS in your Python Dash app
