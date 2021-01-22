@@ -6,7 +6,7 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 
 import pandas as pd
-import geopandas as gpd
+#import geopandas as gpd
 import plotly.graph_objects as go
 import plotly.offline as py
 import os
@@ -157,12 +157,13 @@ def init_dashboard(server): # or create_dashboard
     #""""""""""""""""""""""""""""""""""""""""""""""""""""
     # 2nd - Creating the body
     # Individuals components of the Graphs first
+    #urlDataPath = ('https://github.com/Juunicacio/Track-Turtle-App/tree/gh-pages/flask_plotlydash/static/data/')
     
-    depthPointsDegree_file = ('/static/data/{3}.degree_Acquisition_Time_Depth_Points_Tag_333A_Sept_4326.shp')
-    gpsPoints_file = ('/static/data/{1}.reproj_Track_GPS_Points_Tag_333A_Sept_3035.shp')
+    depthPointsDegree_file = ('/static/degree_Acquisition_Time_Depth_Points_Tag_333A_Sept.csv')
+    gpsPoints_file = ('/static/reproj_Track_GPS_Points_Tag_333A_Sept.csv')
 
-    depthPointsDegree = gpd.read_file(depthPointsDegree_file)
-    gpsPoints = gpd.read_file(gpsPoints_file)
+    depthPointsDegree = pd.read_csv(depthPointsDegree_file)
+    gpsPoints = pd.read_csv(gpsPoints_file)
 
     # Depth Lon and Lat in degrees
     xDegreeDepth = depthPointsDegree.geometry.x
