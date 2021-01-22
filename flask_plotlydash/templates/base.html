@@ -1,0 +1,341 @@
+<!-- being called in routes.py -->
+<!-- “Parent Template” -->
+<!DOCTYPE html>
+<html>
+<head>
+ 	{% block head %}
+
+ 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Satellite Telemetry Data Analysis of Adult Sea Turtle Females post-nesting movements in the Mediterranean Sea.">
+	<meta name="author" content="Juliana Nicacio">
+
+ 	<title>
+ 		{% block title %}
+
+ 		{% if title == "homepage" %}
+		GPS Tracking - Marine Turtle
+		{% else %}
+		Internship Master's Thesis 
+		{% endif %}
+
+		{% endblock %}
+	</title>
+
+	<!-- Font link- Open Sans -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	
+	<!-- external css link -->
+	<link rel="stylesheet" href= "{{ url_for('static',filename='assets/normalize.css') }}"> <!-- before the style.css -->
+	<link rel="stylesheet" href= "{{ url_for('static',filename='assets/style_withdash.css') }}">
+	<!-- if the css doen't update, (browser cache problem), full reload it, hold Shift while clicking reload button -->
+	<link rel="shortcut icon" href="#"> <!--with the images in the static folder, I don't even need it anymore -->
+
+ 	{% endblock %}
+</head>
+
+<body>
+	{% block body %}
+
+	<div id="container">
+
+		<header class="top">
+			<section class="header"> <!-- GPS Tracking - Marine Turtle -->
+				{% block header %}
+				<h1 class="header_title">Satellite Telemetry Data Analysis of Adult Sea Turtle Females post-nesting movements in the Mediterranean Sea</h1>
+				<!-- Exploratory Visual Analysis for Animal Movement 
+				Rightontrack?Performanceofsatellitetelemetryinterrestrialwildliferesearch
+				Accuracy of the system
+				Process of analysing tracking data using Python
+				-->
+				<h2 class="header_subtitle">Internship Master's Thesis</h2>
+				{% endblock %}
+			</section>
+
+		</header><!-- end header -->
+
+
+		<main id="main">
+			<section class="abstract">
+				<h2 class="main_subtitle abstract">Abstract</h2>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<!--
+				reference: 
+				<a href="http://www.seaturtle.org/tagging/analysis.shtml">Analysis of Tagging Data</a>
+				<a href="http://www.phidot.org/software/mark/background/">Program MARK </a>
+				<a href="https://www.sciencedirect.com/science/article/abs/pii/S002209810700158X">Novel GPS tracking of sea turtles as a tool for conservation management</a>
+				<a href="https://www.jstor.org/stable/1444621?seq=1">Satellite Telemetry of Loggerhead Sea Turtle Movement in the Georgia Bight </a>				
+				<a href="https://www.jstor.org/stable/3892903?seq=1">Nesting Movements, Nesting Behavior, and Nest Sites of Green Snakes (Opheodrys aestivus) Revealed by Radiotelemetry </a>
+				<a href="https://meridian.allenpress.com/copeia/article-abstract/2007/2/478/259949/Historical-Diet-Analysis-of-Loggerhead-Sea-Turtles?redirectedFrom=fulltext"> Historical Diet Analysis of Loggerhead Sea Turtles (Caretta Caretta) in Virginia </a>
+				<a href="https://www.lambdatest.com/blog/python-selenium-screenshots/"> How To Take A Screenshot Using Python & Selenium? </a>
+				data analysis of sea turtles
+				data analysis of marine turtle satellite telemetry
+				movements after nesting by satellite telemetry tracking</p>-->
+			</section>
+
+			<section class="introduction">
+				<h2 class="main_subtitle">1. Introduction</h2>
+				<h3 class="main_heading">Heading</h3>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+				<h3 class="main_heading">Heading</h3>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				
+				<h3 class="main_heading">Heading</h3>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</section><!-- end introduction -->
+
+			<section class="mainbody">
+				<h2 class="main_subtitle">2. Data Collection</h2>
+				<h3 class="main_heading">2.1 Access to the Raw data and Understanding the Data</h3>
+				<!-- say about the name of the project and it is goind to work with 4 turtles -->
+				<p class="main_text">The first step of the work consisted in comprehend the single source file "Tag 710333A 20 Sept.xlsx" provided by Telonics and furnished me by Professor P. Luschi. <!--for the first observation of the data and analyse which type of information it provides.--></p>
+				<p class="main_text">That raw file data represents a wildlife tracking data, specifically of an individual of Adult Mediterranean Loggerhead Sea Turtle Female, tracked continuously by satellite telemetry and comprises substantially informations of GPS, Dive and Transmitter Temperature Monitoring, collected in a period between July 9, 2020 and September 21, 2020.</p>				
+
+				<h3 class="main_heading">2.2 Turtle Geolocation using GIS application</h3>
+				<p class="main_text"> As the main aspiration of this project is analysing and answering questions about the presence of that turtle individual in space and time on a Global Positioning System, and being presented with coordinates data, the first step to effectively examine the recorded GPS position points, estimated by the satellite systems, required the use of a geographic visualization tool.</p>
+
+				<p class="main_text">Displaying the coordinates data converted as a csv file into "QGIS", a software GIS, permitted to interpret the turtle track.</p>		
+
+				<!--
+				save the excel file to csv file before importing to qgis
+				To answer the first question "where did the turtle go". 
+				what was the presence of that individual in space and time in its habitat
+				positions based on a Global Positioning System
+				where has it been
+				determine where the animals are going
+				why they are going "there"
+				A GPS tag calculates the location of an animal at specific time intervals using positions estimated by a network of satellites {link2}
+				Being presented with GPS data, 
+				gis transform the coordinates in spacial atribute
+				spacial analysis
+				Animal locations are characterized by both a spatial and a temporal dimension, representing a unique double-faced attribute of animal movement. {32} 
+				raw file
+				not cleaned data
+				-->		
+
+					<aside class="img_box figure_texts">
+						<img class="img_qgis1 clear" src="/static/images/{1b}.layout_di_stampa.png" alt="Turtle GPS Points in the raw tracking file visualized in QGIS">
+						<p class="figure_letter">(a)</p>
+						<!-- scala 1:4000000\
+						Proj4 +proj=longlat +datum=WGS84 +no_defs
+						ESRI Satellite -->
+					
+						<img class="img_qgis1 clear" src="/static/images/{2b}.layout_di_stampa.png" alt="Uncertainty of coordinates of the Turtle GPS Points in the raw tracking file visualized in QGIS">
+						<p class="figure_letter">(b)</p>
+						<!-- scala 1:4000000
+						Proj4 +proj=longlat +datum=WGS84 +no_defs
+						ESRI Satellite -->
+
+						<p class="figure_number">Figure 1 </p> <p class="figure_note">Migration of an adult female loggerhead turtle from Calabrian coasts (southern Italy, central Mediterranean) across the Mediterranean Sea. Tracked by Iridium telemetry satellite technology from July 9, 2020 to September 21, 2020. (a) The points represent its entirely GPS location track data received by the system, whilst (b) the yellow evidence illustrates an inspection and consideration of sporadically uncertainties on the GPS receivers performances.</p>
+
+						<!--
+						Migration Track of an adult female loggerhead turtle from Calabrian coasts (southern Italy, central Mediterranean) across the Mediterranean Sea. Tracked by Iridium telemetry satellite technology from July 9, 2020 to September 21, 2020 and its entirely GPS coordinates data received by the system (a) inspecting and considering sporadically uncertainties on receivers performances (b)
+
+						Migration of an adult female loggerhead turtle from Calabrian coasts (southern Italy, central Mediterranean) across the   Mediterranean Sea. In red (a) its entirely GPS coordinates data, received by Iridium telemetry satellite technology from July 9, 2020 to September 21, 2020 
+						Tracked by Iridium telemetry satellite technology from July 9, 2020 to September 21, 2020 and  the system (a) inspecting and considering sporadically uncertainties on receivers performances (b)
+						-->
+					</aside>
+
+				
+				<h3 class="main_heading">2.3 Dealing with Uncertain data</h3>
+				<p class="main_text">Examining the GPS records into "QGIS" and visually detecting faulty location points; led us to discuss how deleting those uncertain GPS points manually, not considering filtering them by using a estimated parameter or a statistical justification, could impact the data veracity. Furthermore, impacting any update and increasement of the dataset with further collected locations in time, likewise impacting a different turtle track dataset within the same project. 
+				<p class="main_text">All individual turtles database information related to the same project, required the same parameter definitions as a tool of data quality assurance. "Uncertainty can impact big data, both in terms of analytics and the dataset itself {37}". To prevent affecting data veracity, when filtering uncertain GPS points, a standardized parameter to evaluate reliable data was established.</p>
+
+				<p class="main_text">When data is unertain, it may be plausible to just delete it, however, in this project, uncertain data will be filtered out from reliable data to a distinct dataset, and equally utilised as measurement for the satellite telemetry system performance analysis.</p>					
+
+				<p class="main_text">To implement the standardized parameter, clean the data and filter reliable GPS from uncertain GPS in an automation way, a use of a programming language was required. "Means of providing automation is the use of an object-oriented approach to project implementation, a standard set of tools for providing processes for building and debugging programs, connecting auxiliary libraries for the programming language used" {39}. The programming language introduced in this project to an automated analysis is "Python".</p>				
+				<!--
+				Implying consequences
+				automation analysis way
+				reliable so that related data can be identified using common terminology and format. 
+				to consider a point as uncertain
+				estimate
+				Accurate analytics.
+				comparability;
+				standardized and contextualized data for efficiency and re-usability;
+				consider establishing  
+				standard,uniformly,estimated parameter value,veracity that also would have uncertain GPS points
+				not remove manualy
+				big data
+				automatically
+				Introduction to Automated Analysis
+				to automatically generate a very large number of 
+				program
+				python
+				-->	
+
+				<h2 class="main_subtitle">3. Data Cleaning</h2>
+				<h3 class="main_heading">3.1 Cleaning data with Python</h3>
+				<p class="main_text">To evaluate GPS data on the accurate data entry, <!--evaluating reliable GPS data,--> the standardization method established was the use of a velocity limit filter as parameter that could deliver reasonably reliable results for GPS position points, since the velocity between sequence points do not surpases 4km/h.<!--
+
+					Calculate velocity and errors from distance between GPS points
+
+					 I computed the distance between GPS points (Using Geodesic distance and Vincenty formula) and, since the timestamp information is known, the time difference between the points can be used to calculate the time delta. Since, we now have the distance and the time delta between the points, we can calculate the velocity (= distance between points/time delta) which could then be also used as a measurement input to the Kalman. {link}
+
+					 Speed (or rate, r) is a scalar quantity that measures the distance traveled (d) over the change in time (Δt), represented by the equation r = d/Δt.
+					 The most common formula for average speed is distance traveled divided by time taken.
+					 un file con la formula	per il calcolo della velocità tra fix che puoi usare per filtrare i dati. 
+					 usare come soglia massima di velocità 4 kmh 
+				</p>
+
+				<p class="main_text"></p>
+				tell about  standardized parameter to evaluate reliable data was established.
+
+				<p class="main_text">The filter parameter that could deliver reasonably reliable results for GPS position points used in this project, applied for all tracked turtles, was the use of a velocity limit filter from point to point that if it is exceed, the data will automatically be sent the uncertain gps dataset, to be used in the analysis of the system performance.</p>-->
+				<!--	
+				tell about  standardized parameter to evaluate reliable data was established.
+				To evaluate reliable GPS data and get rid of those uncertainties
+				to get rid of those uncertainties ,to magnify accurate data, an analyse of the velocity between sequence points has been atribuited...
+				the standardization method 
+				if the velocity surpases 4km/h the point  nedded to be removed.
+				on the ability of satellite telemetry units to provide the expected amount and quality of data by
+				We evaluate the success rate in obtaining GPS fixes as well as in transferring these fixes to the user and we evaluate failure rates
+				Nonetheless, this study shows that the performance of satellite telemetry applications has shown improvements over time, and based on our findings, we provide further recommendations for both users and manufacturers.
+				and interpret the findings
+
+				Cleaning up your data is not the most glamourous of tasks, but it's an essential part of data wrangling.
+				Remove GPS Errors by Angular velocity/Rotational speed (degree per second)
+				## Prepare Geod Object for Calculations ----------------------
+				#Geod is used as objec to calculate distances between points expressed in lat/lon (in degree)
+				## # Choosing a Reference Ellipsoid
+				# Convert km/h to m/s
+
+				Applying data analytics on a dataset to get insights about the data. 				
+				
+				Step 2: Set Clear Measurement Priorities
+				This step breaks down into two sub-steps: A) Decide what to measure, and B) Decide how to measure it.
+				manipulate data
+				inspecting, cleansing, transforming, and modeling data
+				interpret -reviewed for the purpose of arriving at an informed conclusion
+				Interpreting your findings is about seeing whether what you found confirms or does not confirm the findings of previous studies in your literature review.
+				to look for meaning that can serve as evidence. Often scientists seek to determine whether variables are related and how much they are related.
+				you can conclude that your observation is statistically significant.
+				This means that the results are considered to be „statistically non-significant‟ if the analysis shows that differences as large as (or larger than) the observed difference would be expected to occur by chance more than one out of twenty times
+				Data interpretation is the process of reviewing data through some predefined processes which will help assign some meaning to the data and arrive at a relevant conclusion
+				identify
+				apprehends				
+							
+				<p class="main_text">parameter estimation using data from marked individuals.
+				for the analysis of data from marked individuals. 
+				<a href="http://www.phidot.org/software/mark/">_</a></p> -->	
+
+					<aside class="img_box_halfsize figure_texts">
+						<img class="img_code1_halfsize clear" src="/static/images/{1.1}_libraries.png" alt="Python libraries used to implement the standardized parameter_script1">
+						<p class="figure_letter_halfsize">(a)</p>
+					</aside>
+
+					<aside class="img_box figure_texts">
+						<div class="my-custom-scrollbar">
+							<img class="img_code1 clear my-table" src="/static/images/{1.2.2}_filtering no gps data from the dataframe.png" alt="Python code to filter no GPS data from GPS data_script1">
+						</div>
+						<p class="figure_letter">(b)</p>
+					</aside>
+
+
+
+
+
+				<h2 class="main_subtitle">3. Analysis</h2>
+
+
+				<h3 class="main_heading">Heading</h3>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+				<h2 class="main_subtitle">4. Discussion</h2>
+				<h3 class="main_heading">Heading</h3>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</section><!-- end mainbody -->
+
+			<section class="conclusion">
+				<h2 class="main_subtitle">5. Conclusion</h2>
+				<h3 class="main_heading">Heading</h3>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</section><!-- end conclusion -->
+
+			<section class="references">
+				<h2 class="main_subtitle">6. References</h2>
+				<h3 class="main_heading">Heading</h3>
+				<p class="main_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</section><!-- end references -->
+
+		</main><!-- end main -->
+
+
+		<footer id="footer">
+			<section class="footer">
+				<p clas="footer_text">Juliana Nicacio</p>
+				<p clas="footer_text">Internship Master's Thesis</p>
+			</section>
+			
+		</footer><!-- end footer -->
+		
+	</div><!-- end container -->
+
+	{% endblock %}
+</body>
+</html>

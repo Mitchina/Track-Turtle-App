@@ -1,0 +1,13 @@
+<!-- being called in routes.py -->
+<!-- “Child Template” -->
+{% extends 'base.html' %}
+
+{% block title %} Page Not Found {% endblock %}
+
+{% block body %}
+ <h1>404 Error :(</h1>
+ <p>What you were looking for is just not there.<p>
+ <a href="{{ url_for('templates', filename='index.html') }}">go somewhere nice</a>
+
+<!-- do not work, see method GET and POST -->
+{% endblock %}

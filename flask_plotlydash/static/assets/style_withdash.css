@@ -1,0 +1,381 @@
+/* GPS Tracking - Marine Turtle | Juliana Nicacio */
+
+/* being called in base.html
+
+/* Base styles
+   ========================================================================== */
+
+/**
+ * Box Model Hack:
+ * 1. Firefox.
+ * 2. Safari/Chrome/iOS/Android.
+ * 3. IE.
+ */
+*{
+	-moz-box-sizing:border-box; /* 1 */
+	-webkit-box-sizing:border-box; /* 2 */
+	box-sizing:border-box; /* 3 */
+}
+
+/**
+ * CSS variables - Proj Colors: 
+ */
+
+:root {
+	--greenPlant: #292a0e;
+	--brownGreen: #60643c;
+	--lightBrown: #7e5c14;
+	/*--sarasotaSand: #DFCA86;
+	--don: #E2DDA7;*/
+	--pumpkins: #C48A0A;
+	--oliveGreen: #B4BB61;
+	--solidGround: #70380F;
+	--chocolate: #774F38;
+	/*--strawberrySugar: #E08E79;
+	--creme: #F1D4AF;*/
+	--powderpuff: #ECE5CE;
+	/*--charlotte: #C5E0DC;*/
+}
+
+body{	
+	background-image: url("../images/Caretta-caretta.jpg");
+	/*background-size: 1000px;
+	background-attachment: fixed;*/		
+	/* Full Page Background Image */
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed; /**/	
+}
+
+/**
+ * Clear Class (used when floating divs): 
+ */
+
+.clear {
+	clear:both;
+}
+
+/**
+ * Text Colors: 
+ */
+
+.header_title{
+	color: var(--chocolate);
+}
+
+.header_subtitle{
+	color: var(--powderpuff);
+}
+
+.main_subtitle{
+	color: var(--brownGreen);
+}
+
+.main_heading {
+	color: var(--lightBrown);
+}
+
+.main_text {
+	color: var(--solidGround);	
+}
+
+.footer_text {
+	color: var(--greenPlant);
+}
+
+/**
+ * Margins: 
+ * 1. The .abstract (subtitle) needs to be set after the .main_subtitles.
+ */
+.main_subtitle {
+	margin-block-start: 2.2em;
+}
+.abstract {
+	margin-block-start: 0.83em; /* 1 */
+}
+
+/**
+ * Fonts: 
+ */
+
+.header {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 1.2rem;
+	text-align: center;
+}
+
+#main {
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+	font-size: 1.1rem;
+	font-weight: 400;
+	line-height: 1.7;
+}
+
+.footer {
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+	font-size: 0.8rem;
+	font-weight: 400;
+	line-height: 1.7;
+	margin-left: 25px;
+}
+
+/* Layout - Desktop version
+   ========================================================================== */
+
+/**
+ * Calling the divs: 
+ * 1. Center the page.
+ * 2. Pop up the div.
+ * 3. Changed it to Class to call in the Dash Page. before #header
+ */
+
+#container {
+	/*background: var(--sarasotaSand);*/
+	width: 1000px;
+	margin: 0 auto 0 auto; /* 1 */
+}	
+
+.top { /* 3 */
+	background: var(--pumpkins);
+	padding: 25px; /* 2 */;
+}
+
+#main {
+	background: var(--powderpuff);
+	padding: 50px; /* 2 */
+}
+
+#footer {
+	background: var(--oliveGreen);
+	padding: 25px; /* 2 */	
+}
+
+/**
+ * Image/figure/Graph desktop layouts: 
+ */
+
+.img_box {
+	width: 900px;
+}
+
+.img_box_halfsize {
+	width: 450px;	
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.img_qgis1 {
+	width: 100%;
+	margin-right: 1rem;
+}
+
+.img_code1_halfsize {
+	width: 450px;
+	margin-right: 1rem;	
+}
+
+.img_code1 {
+	width: 100%;	
+	margin-right: 1rem;
+}
+
+.figure_texts {
+	font-size:0.9rem;
+	color: var(--solidGround);
+}
+
+.figure_letter {
+	text-align: center;
+	font-weight: bold;
+	margin-top: 0;	
+}
+
+.figure_letter_halfsize {
+	text-align: center;
+	font-weight: bold;
+	margin-top: 0;	
+}
+
+.figure_number {
+	font-size:1rem;
+	font-weight: bold;
+	display: inline;
+}
+
+.figure_note {
+	display: inline;
+}
+
+/**
+ * Testing Dash layouts:  
+ * 1. Pay attention if add something else in this div.
+ */
+#container_dashpage {
+	margin:0px auto;
+	/*margin:0px -10px 10px;*/
+}
+
+.banner {
+	height:75px;
+	margin:0px -10px 10px;
+	/*background-color: rgb(66, 196, 247);*/
+	background: var(--pumpkins); 
+	/*border-radius: 2px;*/
+}
+
+.left_column {
+	height:75px;	
+	float: left;
+	display: inline-block;
+	width: 400px; /* 1 */
+}
+
+.right_column {
+	height:75px;
+	margin-right: 10px;
+	float: left;
+	display: inline-block;
+	width: 100px;
+}
+
+.left_column h2{
+	font-size: 1rem;
+	color: white;
+	/*padding-top: 15px;*/
+	margin: 25px;
+	/*margin-left: 4%;	*/
+	display: inline-block;
+	/*padding: 0;*/
+}
+
+.right_column img{
+	position: relative;
+	margin: 12px;
+	/*margin-right: 5px; /* 1 */
+	height: 50px;
+}
+
+/* Layout - Mobile version
+   ========================================================================== */
+
+ @media only screen and (max-width: 1000px/*1060px*/)  {
+ 	#container {
+ 		width: 100%;
+ 		margin: 0 auto;
+ 	}
+
+ 	/**
+	 * Apply an overflow-y style to the div on which you want to make the scroller
+	 * 1. to the div	 
+ 	 * 2. to the content
+	 */
+
+	.my-custom-scrollbar  /* 1 */ { 
+		position: relative;
+		height: 350px;
+		overflow-y: auto;
+		border-style: groove;
+		border-color: white;
+		margin-bottom: 0.4rem;
+	}
+
+	.my-table  /* 2 */ {
+		display:table;
+		width: 100%;
+	}
+
+ 	/**
+	 * Image/figure/Graph layouts: 
+	 */
+
+ 	.img_box {
+		width: 100%;
+	}	
+
+ 	.img_box.img_qgis1 {
+		position: absolute;
+		margin-right: 1rem;
+	}
+
+	.img_code1 {
+		width: 900px;
+    	height: 350px;
+	}	
+
+ 	/**
+	 * Margins and paddings: 
+	 */
+
+ 	#header {
+ 		padding: 10px;
+ 		text-align: center;
+ 	}
+
+ 	.header_title {
+ 		margin-top: 5px;
+ 	}
+
+ 	.header_subtitle {
+ 		margin-bottom: 5px;
+ 	}
+
+ 	#main {
+ 		padding: 1.2rem;
+ 	}
+
+ 	.footer { 		
+ 		margin-left: 0;
+ 	}
+
+ 	/**
+	 * Font-sizes: 
+	 */
+
+ 	html {
+ 		font-size: 1rem;
+ 	}
+	
+ 	.header_title {
+ 		font-size: 2.1rem;
+ 	}
+
+ 	.header_subtitle {
+ 		font-size: 1.2rem;
+ 	}
+
+ 	.main_subtitle {
+ 		font-size: 1.3rem;
+ 	}
+
+ 	.main_heading {
+ 		font-size: 1.1rem;
+ 	}
+
+ 	.footer {
+ 		font-size: 0.7rem;
+ 	}
+
+ 	/**
+ 	* Testing Dash layouts:  
+ 	*/
+
+ 	#container_dashpage {
+		width: 100%;
+	}
+
+	#banner {
+		width: 100%;
+	}
+ }
+
+ @media only screen and (max-width: 500px)  {
+ 	/**
+ 	 * 1. halfsized images, remains small and inside the page when in decreased page size 	 
+ 	 * 2. the letters in halfsized images, remains in center when decreasing page size
+ 	 */
+
+ 	.img_box_halfsize, .img_code1_halfsize {
+		width: 100%; /* 1 *//* 2 */
+	}	
+ }
