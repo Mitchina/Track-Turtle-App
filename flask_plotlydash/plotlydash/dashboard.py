@@ -6,50 +6,27 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 
 import pandas as pd
-#import geopandas as gpd
+import geopandas as gpd
+import json
 import plotly.graph_objects as go
-import plotly.offline as py
-import os
-import numpy as np
+#import plotly.offline as py
 
-import pyproj as pj
-import datetime as dt
-from collections import Counter
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-import seaborn as sns
-import shapely
-import descartes #to plotting polygons in geopandas
-import plotly.express as px
-from plotly.subplots import make_subplots
+#import numpy as np
+#import pyproj as pj
+#import datetime as dt
+#from collections import Counter
+#import matplotlib.pyplot as plt
+#import matplotlib as mpl
+#import seaborn as sns
+#import shapely
+#import descartes #to plotting polygons in geopandas
+#import plotly.express as px
+#from plotly.subplots import make_subplots
 
+#import io
 #import base64
 
-#path = os.getcwd()
-#print(path)
-    #def parse_data(contents, filename):
-        #content_type, content_string = contents.split(',')
 
-        #decoded = base64.b64decode(content_string)
-        #try:
-            #if 'csv' in filename:
-                # Assume that the user uploaded a CSV or TXT file
-                #df = pd.read_csv(
-                   # io.StringIO(decoded.decode('utf-8')))
-           # elif 'xls' in filename:
-                # Assume that the user uploaded an excel file
-                #df = pd.read_excel(io.BytesIO(decoded))
-            #elif 'txt' or 'tsv' in filename:
-                # Assume that the user upl, delimiter = r'\s+'oaded an excel file
-                #df = pd.read_csv(
-                    #io.StringIO(decoded.decode('utf-8')), delimiter = r'\s+')
-       # except Exception as e:
-            #print(e)
-            #return html.Div([
-                #'There was an error processing this file.'
-           #])
-
-       # return df
 
 
 # Flask app into Dash as server
@@ -157,21 +134,29 @@ def init_dashboard(server): # or create_dashboard
     #""""""""""""""""""""""""""""""""""""""""""""""""""""
     # 2nd - Creating the body
     # Individuals components of the Graphs first
-    #urlDataPath = ('https://github.com/Juunicacio/Track-Turtle-App/tree/gh-pages/flask_plotlydash/static/data/')
+    ##urlDataPath = ('https://github.com/Juunicacio/Track-Turtle-App/tree/gh-pages/flask_plotlydash/static/data/')
     
-    depthPointsDegree_file = ('/static/degree_Acquisition_Time_Depth_Points_Tag_333A_Sept.csv')
-    gpsPoints_file = ('/static/reproj_Track_GPS_Points_Tag_333A_Sept.csv')
+    # url of the shapefiles as csv 
+    ##url_depthPointsDegree = 'https://raw.githubusercontent.com/Juunicacio/Track-Turtle-App/gh-pages/flask_plotlydash/static/data/%7B4%7D.degree_Acquisition_Time_Depth_Points_Tag_333A_Sept.csv'
+    ##url_gpsPoints = 'https://raw.githubusercontent.com/Juunicacio/Track-Turtle-App/gh-pages/flask_plotlydash/static/data/%7B5%7D.reproj_Track_GPS_Points_Tag_333A_Sept.csv'
 
-    depthPointsDegree = pd.read_csv(depthPointsDegree_file)
-    gpsPoints = pd.read_csv(gpsPoints_file)
+    # path for the shp files
+    path_depthPointsDegree = r"/static/data/{3}.degree_Acquisition_Time_Depth_Points_Tag_333A_Sept_4326.shp"
+    path_gpsPoints = r"/static/data/{6}.degree_Track_GPS_Points_Tag_333A_Sept_4326.shp"
+    
+    #depthPointsDegree = pd.read_csv(path_depthPointsDegree)
+    #gpsPoints = pd.read_csv(path_gpsPoints)
 
     # Depth Lon and Lat in degrees
-    xDegreeDepth = depthPointsDegree.geometry.x
-    yDegreeDepth = depthPointsDegree.geometry.y
+    #xDegreeDepth = depthPointsDegree.geometry.x
+    #yDegreeDepth = depthPointsDegree.geometry.y
 
     # GPS Lon and Lat in degrees
-    xDegreeGps = gpsPoints['GPS Longit']
-    yDegreeGps = gpsPoints['GPS Latitu']
+    #xDegreeGps = gpsPoints['GPS Longit']
+    #yDegreeGps = gpsPoints['GPS Latitu']
+
+    # Convert it to a geojson
+
 
     # Column Acquisition time of both
     textDepth = depthPointsDegree['Acquisitio']
@@ -198,26 +183,65 @@ def init_dashboard(server): # or create_dashboard
     fig = go.Figure(
             {"data": gohistlayer1,
              "layout": layout})
-    py.iplot(fig, filename='Layer 1 histogram') 
+    #py.iplot(fig, filename='Layer 1 histogram') 
     ################
 
-    dash_app.layout = html.Div (
-        [
-
+    dash_app.layout = html.Div ([
+        dcc.Upload(
+            id='upload-data',
+            children=html.Div([
+                'Drag and Drop or',
+                html.A('Select Files')
+                ]),
+                style={
+                'with': '100%',
+                'height': '60px', #etc
+                },
+                # Allow multiple files to be uploaded
+                multiple=True
+        ),
+        html.Div(id='output-data-upload'),
         ]
     )
 
-    html.Div(
-        [
+    html.Div([
         html.H1(children='Hello Dash'),
         html.Div(children= 'Dash: A web application framework for Python'),
         dcc.Graph(
             id='example-graph',
             figure=fig
-        )
-        ],
+        )],
         id='dash-container'
     )
+
+    #def parse_data(contents, filename):
+    #content_type, content_string = contents.split(',')
+
+    #decoded = base64.b64decode(content_string)
+    #try:
+        #if 'csv' in filename:
+            # Assume that the user uploaded a CSV or TXT file
+            #df = pd.read_csv(
+                #io.StringIO(decoded.decode('utf-8')))
+        #elif 'xls' in filename:
+            # Assume that the user uploaded an excel file
+            #df = pd.read_excel(io.BytesIO(decoded))
+        #elif 'txt' or 'tsv' in filename:
+            # Assume that the user upl, delimiter = r'\s+'oaded an excel file
+            #df = pd.read_csv(
+                #io.StringIO(decoded.decode('utf-8')), delimiter = r'\s+')
+    #except Exception as e:
+        #print(e)
+        #return html.Div([
+            #'There was an error processing this file.'
+       #])
+
+    #return df #html.Div([
+        #dcc.Graph(
+            #id='example-graph',
+            #figure=fig
+            #)
+        #])
 
 
 
@@ -230,31 +254,21 @@ def init_dashboard(server): # or create_dashboard
     ###dash_app.layout = html.Div([
 
         ###html.Div([
-
             ###html.Div([html.H2("Track Turtle App")
                 ###], className= 'left_column'),
             ###html.Div([html.Img(src="/static/images/{2}.loggerhead_turtle.jpg", alt="Caretta caretta")
                 ###], className= 'right_column')
-
             ###], className='banner clear'),
-
         ###], className=' container_dashpage clear')
 
     #(id='dash-container', children=[
         #html.H1(children='Hello Dash'),
-
         #html.Div(children= 'Dash: A web application framework for Python'),
-
         #dcc.Graph(
             #id='example-graph',
             #figure=fig
         #)
-    #])
-
-    
- 
-
-          
+    #])          
 
     # Initialize callbacks after our app is loaded
     # Pass dash_app as a parameter
@@ -265,7 +279,6 @@ def init_dashboard(server): # or create_dashboard
 #def init_callbacks(dash_app):
     #@app.callback(
     # Callback input/output
-
     #)
 
     #def update_graph(rows):
