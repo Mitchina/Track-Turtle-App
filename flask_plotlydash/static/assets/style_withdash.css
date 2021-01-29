@@ -211,50 +211,24 @@ body{
  * Testing Dash layouts:  
  * 1. Pay attention if add something else in this div.
  */
-#container_dashpage {
-	margin:0px auto;
-	/*margin:0px -10px 10px;*/
+.content-dash-container {
+	margin-top: 10px;
 }
 
-.banner {
-	height:75px;
-	margin:0px -10px 10px;
-	/*background-color: rgb(66, 196, 247);*/
-	background: var(--pumpkins); 
-	/*border-radius: 2px;*/
+.graph_description {
+	background: var(--pumpkins) !important;
+	opacity: 0.6;
 }
 
-.left_column {
-	height:75px;	
-	float: left;
-	display: inline-block;
-	width: 400px; /* 1 */
+.graph_graph {
+	margin: 0 -10px 10px;
 }
 
-.right_column {
-	height:75px;
-	margin-right: 10px;
-	float: left;
-	display: inline-block;
-	width: 100px;
+#scatter_graph {
+	margin-bottom: 15px;
 }
 
-.left_column h2{
-	font-size: 1rem;
-	color: white;
-	/*padding-top: 15px;*/
-	margin: 25px;
-	/*margin-left: 4%;	*/
-	display: inline-block;
-	/*padding: 0;*/
-}
 
-.right_column img{
-	position: relative;
-	margin: 12px;
-	/*margin-right: 5px; /* 1 */
-	height: 50px;
-}
 
 /* Layout - Mobile version
    ========================================================================== */
