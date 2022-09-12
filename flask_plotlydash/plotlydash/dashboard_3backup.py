@@ -9,7 +9,6 @@ import json
 import requests
 import plotly.graph_objects as go
 import plotly.express as px # for the 2nd graph
-from datetime import datetime
 #import plotly.offline as py --------- using when debugging in jupyter notebook
 
 '''-------------------- Functions ------------------------------- 
@@ -32,17 +31,6 @@ from datetime import datetime
     4.1 add trace to Go Scatter
 
 '''
-COLOR_LAYER1 = 'orange'
-COLOR_LAYER2 = 'red'
-COLOR_LAYER3 = 'green'
-COLOR_LAYER4 = 'magenta'
-COLOR_LAYER5 = 'grey'
-COLOR_LAYER6 = 'brown'
-COLOR_LAYER7 = 'blue'
-COLOR_LAYER8 = 'purple'
-COLOR_LAYER9 = 'navy'
-COLOR_LAYER10 = 'black'
-
 def loadLayerData(LayerColumn,JsonDepthData): # 1
 
     jlayerDepths = [] 
@@ -63,84 +51,18 @@ def loadLayerData(LayerColumn,JsonDepthData): # 1
 
 def generateHistogramGraph(LayerValueInPercentage, LayerNumber): # 2
     
-    results = [v for v in LayerValueInPercentage if float(v.strip('%')) > 1.0]
-    jgohistlayer = [go.Histogram(x=results, 
+    jgohistlayer = [go.Histogram(x=LayerValueInPercentage, 
                          opacity=0.4,
-                         nbinsx=20,
                          marker=dict(color='orange'))]
     jlayout = go.Layout(barmode='overlay',
-                                #width= 800,
-                                #height= 400,
-                                #title=f'Layer {LayerNumber} histogram',
-                                xaxis={'range':[1,100], 'title':f'Layer {LayerNumber} occurrence in %'},
-                                yaxis={'range':[0,500], 'title':'Count'})                                
+                                 title=f'Layer {LayerNumber} histogram',
+                                 yaxis_title='Count',
+                                 xaxis_title=f'Layer {LayerNumber} occurrence in %') # or 'Percentage (%) of occurrence in Layer'
     jfig = go.Figure(
             {"data": jgohistlayer,
              "layout": jlayout})
 
     return jfig
-
-def generateBoxGraph(LayerNumber, jlayerDepthsInPercentage, color):
-    results = [v for v in jlayerDepthsInPercentage if float(v.strip('%')) > 1.0]
-    jboxdata = go.Box(name= f' Layer {LayerNumber}', y=results, fillcolor=color)   
-    jboxlayout =  go.Layout(#width=400, height=400, 
-        yaxis_range=[0,100], yaxis_title= 'Occurrence in %')
-    jbox =go.Figure(
-            {"data":jboxdata,
-            "layout":jboxlayout})
-
-    return jbox
-
-    """
-def generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage, lineColor):
-
-    dates = []
-
-    for dt in jacquisitionDepth:
-        dates.append(datetime.strptime(dt, "%Y.%m.%d %H:%M:%S"))
-
-    jlinedata = [go.Scatter(
-                        x=dates,
-                        y=jlayerDepthsInPercentage,
-                        #xaxis_title='Datetime',
-                        #yaxis_title='Occurrence in %',
-                        #yaxis_range=[0,100],
-                        line = dict(
-                            width = 1,
-                            color = lineColor)
-                    )]
-    jlinelayout = go.Layout(#width=800, height=400, 
-                            xaxis={'autorange':True,
-                                'range': ['x'[0], 'x'[-1]],
-                                'rangeselector': {
-                                    'buttons' : [
-                                        #{'count':2, 'step':"hour", 'stepmode':"todate", 'label':"2h"},
-                                        #{'count':24, 'step':"hour", 'stepmode':"todate", 'label':"24h"},
-                                        {'count':25, 'step':"hour", 'stepmode':"todate", 'label':"1d"},
-                                        #{'count':7, 'step':"day", 'stepmode':"backward", 'label':"1w"},
-                                        #{'count':14, 'step':"day", 'stepmode':"backward", 'label':"2w"},
-                                        #{'count':1, 'step':"month", 'stepmode':"backward", 'label':"1m"},
-                                        #{'step':"all"}
-                                    ]},
-                                'rangeslider_visible':True, 
-                                'type':'date',
-                                'tickformat':'%Y.%m.%d %H:%M:%S', # use <br> if want to separate in 2 lines
-                                'tick0': str(dates[0]),
-                                'dtick':7200000.0, # Converting one day time to milliseconds (86400000.0) (7200000.0 to 2hr)
-                                'fixedrange':True},
-                            yaxis={'range':[0,100],
-                                'fixedrange':True}
-                    )
-
-    #config = dict(displayModeBar=False, scrollZoom=False )
-
-    jline = go.Figure(
-            {"data":jlinedata,
-            "layout":jlinelayout})
-            #"config":config})             
-    
-    return jline
-    """
 
 def generateGeoMap (jyDegreeGps, jxDegreeGps, jacquisitionGps, jyDegreeDepth, jxDegreeDepth, jlayerDepths, 
     jmaxPercLay, jminPercLay, jlayerDepthsInPercentage, LayerNumber): # 3
@@ -201,59 +123,41 @@ def generateScatterGraph(): # 4
 
     jgoscattermapLayer = go.Figure()
         
-    jgoscattermapLayer.update_xaxes(dict(                                
-                                rangeslider_visible=True,                                
-                                autorange=True,
-                                #range= ['x'[0], 'x'[-1]],
-                                type='date',
-                                #fixedrange=True,                                
-                                rangeselector= dict(
-                                    buttons = list([
-                                        dict(count=26, step="hour", stepmode="todate", label="1D"),
-                                        dict(count=7, step="day", stepmode="todate", label="1W"),
-                                        dict(count=14, step="day", stepmode="todate", label="2W"),
-                                        dict(count=1, step="month", stepmode="todate", label="1M"),
-                                        dict(count=2, step="month", stepmode="todate", label="2M"),
-                                        dict(count=3, step="month", stepmode="todate", label="3M"),
-                                        dict(step="all")
-                                    ]),
-                                ), 
-                                tickformat='%H:%M:%S <br>%d.%m.%Y', # use <br> if want to separate in 2 lines
-                                #tick0= str('x'[0]),
-                                #dtick=7200000.0, # Converting one day time to milliseconds (86400000.0) (7200000.0 to 2hr),
-                            ))
-                                
-    jgoscattermapLayer.update_yaxes(dict(
-                                    range=[0,100],
-                                    fixedrange=True))
+    jgoscattermapLayer.update_xaxes(
+        rangeslider_visible=True,
+        rangeselector=dict(
+            buttons=list([
+                dict(count=1, label="1h", step="hour", stepmode="backward"),
+                dict(count=1, label="1d", step="day", stepmode="backward"),
+                dict(count=1, label="1m", step="month", stepmode="backward"),
+                dict(count=2, label="2m", step="month", stepmode="backward"),
+                dict(count=3, label="3m", step="month", stepmode="backward"),
+                dict(step="all")
+            ])
+        )
+    )
 
-
-    jgoscattermapLayer.update_layout(#title='Depth Occurrence',
+    jgoscattermapLayer.update_layout(title='Depth Occurrence',
                         legend = {'orientation': 'h', 'x': 0.1 ,'y':1.4},
                         showlegend=True, # change if you want to see the legend *
                         xaxis={'title': 'Datetime'},
-                        yaxis={'title': 'Occurrence in %', 'range': [0,100]}
+                        yaxis={'title': 'Occurrence in %'}
     )
 
     return jgoscattermapLayer
 
-def addScatterGraphTrace(jgoscattermap,jacquisitionDepth,jlayerDepthsInPercentage,LayerNumber,UpperDepthLayerRange,LowerDepthLayerRange, lineColor):
-    dates = []
-
-    for dt in jacquisitionDepth:
-        dates.append(datetime.strptime(dt, "%Y.%m.%d %H:%M:%S"))
-
+def addScatterGraphTrace(jgoscattermap,jacquisitionDepth,jlayerDepthsInPercentage,LayerNumber,UpperDepthLayerRange,LowerDepthLayerRange):
     jgoscattermap.add_trace( # 4.1
         go.Scatter(
-            x = dates,
+            x = jacquisitionDepth,
             y = jlayerDepthsInPercentage,
             name=f'Layer {LayerNumber}: between {UpperDepthLayerRange} to {LowerDepthLayerRange} meters deep',
             showlegend=True,
-            #marker = dict(
-            line = dict(
+            marker = dict(
+                line = dict(
                 width = 1,
-                color = lineColor)
-            #)
+                color = 'DarkSlateGrey')
+            )
         )
     )
 #--------------------End Functions ------------------------------- 
@@ -301,7 +205,7 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
     jdata_depthPointsDegree = responseDegree.json()
     jdata_gpsPointsDegree = responseGps.json()
 
-    # Creating a loop through Depth Lon[0] and Lat[1] --------
+    # CREATE A loop through Depth Lon[0] and Lat[1]--------
     jxDegreeDepth = []
     jyDegreeDepth = []
     for i in jdata_depthPointsDegree['features']:
@@ -310,7 +214,7 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
         jxDegreeDepth.append(lonDepth)
         jyDegreeDepth.append(latDepth)
 
-    # Creating a loop through GPS Lon[0] and Lat[1]
+    # CREATE A loop through GPS Lon[0] and Lat[1]
     jxDegreeGps = []
     jyDegreeGps = []
     for i in jdata_gpsPointsDegree['features']:
@@ -319,13 +223,13 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
         jxDegreeGps.append(lonGps)
         jyDegreeGps.append(latGps)
 
-    # Creating a loop for Depth Acquisition Time ----------
+    # Creating a loop for Depth Acquisition time ----------
     jacquisitionDepth = []
     for i in jdata_depthPointsDegree['features']:
         aquisDepth = i['properties']['Acquisitio']
         jacquisitionDepth.append(aquisDepth)
 
-    # Creating a loop for GPS Acquisition Time
+    # Creating a loop for GPS Acquisition time
     jacquisitionGps = []
     for i in jdata_gpsPointsDegree['features']:
         aquisGps = i['properties']['Acquisitio']
@@ -356,30 +260,6 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
     jfig9 = generateHistogramGraph(jlayerDepthsInPercentage9, 9)
     jfig10 = generateHistogramGraph(jlayerDepthsInPercentage10, 10)
 
-    jbox1 = generateBoxGraph(1, jlayerDepthsInPercentage1, COLOR_LAYER1)
-    jbox2 = generateBoxGraph(2, jlayerDepthsInPercentage2, COLOR_LAYER2)
-    jbox3 = generateBoxGraph(3, jlayerDepthsInPercentage3, COLOR_LAYER3)
-    jbox4 = generateBoxGraph(4, jlayerDepthsInPercentage4, COLOR_LAYER4)
-    jbox5 = generateBoxGraph(5, jlayerDepthsInPercentage5, COLOR_LAYER5)
-    jbox6 = generateBoxGraph(6, jlayerDepthsInPercentage6, COLOR_LAYER6)
-    jbox7 = generateBoxGraph(7, jlayerDepthsInPercentage7, COLOR_LAYER7)
-    jbox8 = generateBoxGraph(8, jlayerDepthsInPercentage8, COLOR_LAYER8)
-    jbox9 = generateBoxGraph(9, jlayerDepthsInPercentage9, COLOR_LAYER9)
-    jbox10 = generateBoxGraph(10, jlayerDepthsInPercentage10, COLOR_LAYER10)
-
-    """
-    jline1 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage1, COLOR_LAYER1)
-    jline2 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage2, COLOR_LAYER2)
-    jline3 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage3, COLOR_LAYER3)
-    jline4 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage4, COLOR_LAYER4)
-    jline5 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage5, COLOR_LAYER5)
-    jline6 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage6, COLOR_LAYER6)
-    jline7 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage7, COLOR_LAYER7)
-    jline8 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage8, COLOR_LAYER8)
-    jline9 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage9, COLOR_LAYER9)
-    jline10 = generateLineGraph(jacquisitionDepth, jlayerDepthsInPercentage10, COLOR_LAYER10)
-    """
-
     jgomaptraceLayer1 = generateGeoMap(jyDegreeGps, jxDegreeGps, jacquisitionGps, jyDegreeDepth, jxDegreeDepth, jlayerDepths1, 
     jmaxPercLay1, jminPercLay1, jlayerDepthsInPercentage1, 1)
     jgomaptraceLayer2 = generateGeoMap(jyDegreeGps, jxDegreeGps, jacquisitionGps, jyDegreeDepth, jxDegreeDepth, jlayerDepths2, 
@@ -402,7 +282,16 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
     jmaxPercLay10, jminPercLay10, jlayerDepthsInPercentage10, 10)
 
     jgoscatterGraph = generateScatterGraph()
-    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage1,1,0,-5, COLOR_LAYER1)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage1,1,0,-5)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage2,2,-6,-10)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage3,3,-11,-20)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage4,4,-21,-30)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage5,5,-31,-40)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage6,6,-41,-50)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage7,7,-51,-70)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage8,8,-71,-90)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage9,9,-91,-110)
+    addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage10,10,-111,-4095)
     ######################### END DATA GRAPHS #####################################################
     
     ''' --------------- Create Dash Layout # Page Layout stuff ------------------------------------------------------
@@ -478,63 +367,46 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
             #html.H1(className= 'text-center' ,children='Hello Dash'),
             #html.Div(id='top', className= 'row', children=[
             dbc.Row([
-                dbc.Col(html.Div(className= 'top_div', children=[                                      
-                        html.Div(className= 'text_box', children=[                            
-                            html.H1(className= 'text-center' ,children='Depth Data'),
-                            html.H4('Intro'),                                                                                
-                        ]),
-                        dcc.Dropdown(
+                dbc.Col(html.Div(className= 'graph_text col-xl', children=[                
+                        html.Div(className= 'graph_description', children=[
+                            dcc.Dropdown(
                                 id='layer-dropdown',
                                 options=[
-                                    {'label': 'Layer 1 - Occurrence between 0 to -5 meters deep', 'value': '0'},
-                                    {'label': 'Layer 2 - Occurrence between -6 to -10 meters deep', 'value': '1'},
-                                    {'label': 'Layer 3 - Occurrence between -11 to -20 meters deep', 'value': '2'},
-                                    {'label': 'Layer 4 - Occurrence between -21 to -30 meters deep', 'value': '3'},
-                                    {'label': 'Layer 5 - Occurrence between -31 to -40 meters deep', 'value': '4'},
-                                    {'label': 'Layer 6 - Occurrence between -41 to -50 meters deep', 'value': '5'},
-                                    {'label': 'Layer 7 - Occurrence between -51 to -70 meters deep', 'value': '6'},
-                                    {'label': 'Layer 8 - Occurrence between -71 to -90 meters deep', 'value': '7'},
-                                    {'label': 'Layer 9 - Occurrence between -91 to -110 meters deep', 'value': '8'},
-                                    {'label': 'Layer 10 - Occurrence between -111 to -4095 meters deep', 'value': '9'},
+                                    {'label': 'Layer 1', 'value': '0'},
+                                    {'label': 'Layer 2', 'value': '1'},
+                                    {'label': 'Layer 3', 'value': '2'},
+                                    {'label': 'Layer 4', 'value': '3'},
+                                    {'label': 'Layer 5', 'value': '4'},
+                                    {'label': 'Layer 6', 'value': '5'},
+                                    {'label': 'Layer 7', 'value': '6'},
+                                    {'label': 'Layer 8', 'value': '7'},
+                                    {'label': 'Layer 9', 'value': '8'},
+                                    {'label': 'Layer 10', 'value': '9'},
                                 ],
                                 value='0'
-                        )
+                            ),
+                            html.H1(className= 'text-center' ,children='Hello Dash'),
+                            html.P('Layer 1 Description'),                            
+                        ]),
                     ]),
-                )
-            ]),
-            dbc.Row([
-                dbc.Col(html.Div(className= 'text_box', children=[                            
-                            html.H3(children='About the Graphs'),
-                            html.P('Graphs Description'),                                                                                
-                        ]), width=4
-                ),                
-                dbc.Col(html.Div(className= 'graph_graph', children=[
-                        # ------------------- calling histogram graph ------------------                
+                ),
+                # ------------------- calling histogram graph layer 1 ------------------ 
+                dbc.Col(html.Div(className= 'graph_graph col-sm', children=[                
                         dcc.Graph(
                             id='hist_graph',
-                            figure=jfig1,
-                            config={'displayModeBar':False}
-                        ), # ------------------- end histogram)
-                    ]), width=4
-                ),
-                dbc.Col(html.Div(className='graph_graph2', children=[
-                        # ------------------- calling box graph ------------------ 
-                        dcc.Graph(
-                            id='box_graph',
-                            figure= jbox1,
-                            config={'displayModeBar':False}
-                        ) # ------------------- end box)
-                    ]), width=4
+                            figure=jfig1 #################################### callback 
+                        ) # ------------------- end histogram)
+                    ]),
                 #html.Div(className= 'clear'),
-                ),                
-            ]),               
+                )
+            ]),        
+        #]),            
             # ----------------------- calling Map graph layer 1 -------------------------------
             dbc.Row([
                 dbc.Col(html.Div(id='div_map_graph clear', children=[
-                        #html.Div(children=[
-                            #html.H2(children='Depth Map'),
-                            #html.Div(children= 'Turtle Track Map')],
-                            #className= 'row3'),                        
+
+                        html.H2(children='Layer 1 Map'),
+                        html.Div(children= 'Turtle Track Map - Occurrence between 0 to -5 meters deep'),
                         dcc.Graph(
                             id='map_graph',
                             figure=jgomaptraceLayer1
@@ -546,32 +418,31 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
             dbc.Row([
                 dbc.Col(html.Div(id='div_scatter_graph clear', children=[
 
-                            html.Div(className= 'text_box', children=[
-                                html.H3(children='About the Graph'),
-                                html.Div(children= 'Select Layer(s):'),
-                                dcc.Checklist(
-                                    id='layer-checklist',
-                                    options=[
-                                        {'label': 'Layer 1', 'value': '0'},
-                                        {'label': 'Layer 2', 'value': '1'},
-                                        {'label': 'Layer 3', 'value': '2'},
-                                        {'label': 'Layer 4', 'value': '3'},
-                                        {'label': 'Layer 5', 'value': '4'},
-                                        {'label': 'Layer 6', 'value': '5'},
-                                        {'label': 'Layer 7', 'value': '6'},
-                                        {'label': 'Layer 8', 'value': '7'},
-                                        {'label': 'Layer 9', 'value': '8'},
-                                        {'label': 'Layer 10', 'value': '9'},
-                                    ],
-                                    value=['0'],
-                                    labelStyle={'display': 'inline-block'}
-                                )
-                            ]),
-                            dcc.Graph(
+                        html.H2(children='Scatter'),
+                        html.Div(children= 'Depth Occurrence in %'),
+                        dcc.Checklist(
+                            id='layer-checklist',
+                            options=[
+                                {'label': 'Layer 1', 'value': '0'},
+                                {'label': 'Layer 2', 'value': '1'},
+                                {'label': 'Layer 3', 'value': '2'},
+                                {'label': 'Layer 4', 'value': '3'},
+                                {'label': 'Layer 5', 'value': '4'},
+                                {'label': 'Layer 6', 'value': '5'},
+                                {'label': 'Layer 7', 'value': '6'},
+                                {'label': 'Layer 8', 'value': '7'},
+                                {'label': 'Layer 9', 'value': '8'},
+                                {'label': 'Layer 10', 'value': '9'},
+                            ],
+                            value=0,
+                            labelStyle={'display': 'inline-block'}
+                        ),
+                        dcc.Graph(
                                 id='scatter_graph',
                                 figure=jgoscatterGraph
-                            ) # ------------------- end Scatter
-                        ]))                
+                                ) # ------------------- end Scatter
+                    ])
+                )
             ]),            
         ])
     ], className=' container_dashpage')
@@ -579,60 +450,37 @@ def init_dashboard(server): # or create_dashboard   # 5 + # 5.1
 
     @dash_app.callback(
         Output('hist_graph', 'figure'),
-        Output('box_graph', 'figure'),
-        #Output('line_graph', 'figure'), # if active again, include down on return the "jline" for each layer, ex 'jline1'
-        Output('map_graph', 'figure'),        
+        Output('map_graph', 'figure'),
         Input('layer-dropdown', 'value'))
     def update_histAndMap(selected_value):
         if(selected_value == '0'):
-            return jfig1, jbox1, jgomaptraceLayer1
+            return jfig1, jgomaptraceLayer1
         elif (selected_value == '1'):
-            return jfig2, jbox2, jgomaptraceLayer2
+            return jfig2, jgomaptraceLayer2
         elif (selected_value == '2'):
-            return jfig3, jbox3, jgomaptraceLayer3
+            return jfig3, jgomaptraceLayer3
         elif (selected_value == '3'):
-            return jfig4, jbox4, jgomaptraceLayer4
+            return jfig4, jgomaptraceLayer4
         elif (selected_value == '4'):
-            return jfig5, jbox5, jgomaptraceLayer5
+            return jfig5, jgomaptraceLayer5
         elif (selected_value == '5'):
-            return jfig6, jbox6, jgomaptraceLayer6
+            return jfig6, jgomaptraceLayer6
         elif (selected_value == '6'):
-            return jfig7, jbox7, jgomaptraceLayer7
+            return jfig7, jgomaptraceLayer7
         elif (selected_value == '7'):
-            return jfig8, jbox8, jgomaptraceLayer8
+            return jfig8, jgomaptraceLayer8
         elif (selected_value == '8'):
-            return jfig9, jbox9, jgomaptraceLayer9
+            return jfig9, jgomaptraceLayer9
         elif (selected_value == '9'):
-            return jfig10, jbox10, jgomaptraceLayer10
+            return jfig10, jgomaptraceLayer10
 
     @dash_app.callback(
         Output('scatter_graph', 'figure'),        
         Input('layer-checklist', 'value'))
-    def update_histAndMap(selected_values):
-        jgoscatterGraph = generateScatterGraph()
-
-        if '0' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage1,1,0,-5, COLOR_LAYER1)
-        if '1' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage2,2,-6,-10, COLOR_LAYER2)
-        if '2' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage3,3,-11,-20, COLOR_LAYER3)
-        if '3' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage4,4,-21,-30, COLOR_LAYER4)
-        if '4' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage5,5,-31,-40, COLOR_LAYER5)
-        if '5' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage6,6,-41,-50, COLOR_LAYER6)
-        if '6' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage7,7,-51,-70, COLOR_LAYER7)
-        if '7' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage8,8,-71,-90, COLOR_LAYER8)
-        if '8' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage9,9,-91,-110, COLOR_LAYER9)
-        if '9' in selected_values :
-            addScatterGraphTrace(jgoscatterGraph,jacquisitionDepth,jlayerDepthsInPercentage10,10,-111,-4095, COLOR_LAYER10)
-
-        return jgoscatterGraph
+    def update_histAndMap(selected_value):
+        #jgoscatterGraph.data[0].visible = False
+        #jgoscatterGraph.update_traces(overwrite=True, visible=False)
+        jgoscatterGraph.data[0].visible = False
 
     return dash_app.server # app is loaded
 
